@@ -1,8 +1,9 @@
 import { Router } from "express";
+import authRouter from "./auth.routes.js";
 const router = Router();
 
 // feature routers here
-// router.use("/auth", authRouter);
+router.use("/auth", authRouter);
 // router.use("/clients", clientsRouter);
 // router.use("/settings", settingsRouter);
 // router.use("/batches", batchesRouter);
