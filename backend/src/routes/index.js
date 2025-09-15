@@ -1,12 +1,13 @@
 import { Router } from "express";
 import authRouter from "./auth.routes.js";
 import clientsRouter from "./clients.routes.js";
+import settingsRouter from "./settings.routes.js";
 const router = Router();
 
 // feature routers here
 router.use("/auth", authRouter);
 router.use("/clients", clientsRouter);
-// router.use("/settings", settingsRouter);
+router.use("/settings", settingsRouter);
 // router.use("/batches", batchesRouter);
 // router.use("/public", publicRouter);
 // router.use("/worker-shifts", shiftsRouter);
