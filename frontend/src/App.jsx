@@ -18,8 +18,8 @@ export default function App() {
       <BrowserRouter>
         <Shell>
           <Routes>
-            <Route path="/" element={<Navigate to="/public" replace />} />
-            <Route path="/public" element={<PublicLookup />} />
+            <Route path="/" element={<Navigate to="/track" replace />} />
+            <Route path="/track" element={<PublicLookup />} />
             <Route path="/login" element={<Login />} />
 
             <Route

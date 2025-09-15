@@ -23,7 +23,7 @@ export default function PublicLookup() {
   return (
     <div className="space-y-4">
       <div className="bg-white rounded-xl shadow p-4">
-        <h2 className="font-semibold text-green-900">Find my batches (CIN)</h2>
+        <h2 className="font-semibold text-green-900">Track my batches (CIN)</h2>
         <form className="mt-3 flex gap-2" onSubmit={search}>
           <input
             className="border rounded px-3 py-2 flex-1"

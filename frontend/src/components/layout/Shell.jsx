@@ -22,10 +22,10 @@ export default function Shell({ children }) {
         <div className="mx-auto max-w-6xl px-4 py-3 flex items-center justify-between">
           <Link to="/" className="flex items-center gap-2">
             <span className="text-2xl">🫒</span>
-            <span className="font-semibold text-green-900">Oil Mill</span>
+            <span className="font-semibold text-green-900">Zaytena</span>
           </Link>
           <nav className="flex items-center gap-2">
-            <NavItem to="/public">My Batches</NavItem>
+            {!user && <NavItem to="/track">My Batches</NavItem>}
             {user && (
               <>
                 <NavItem to="/clients">Clients</NavItem>
