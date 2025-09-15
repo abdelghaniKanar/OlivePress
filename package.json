@@ -1,0 +1,14 @@
+{
+    "name": "Fil Rouge",
+    "private": true,
+    "workspaces": [
+        "backend",
+        "frontend"
+    ],
+    "scripts": {
+        "dev:api": "npm --prefix backend run dev",
+        "dev:web": "npm --prefix frontend run dev",
+        "test:api": "npm --prefix backend test",
+        "test:web": "npm --prefix frontend test"
+    }
+}
