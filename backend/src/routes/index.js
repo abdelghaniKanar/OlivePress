@@ -5,6 +5,7 @@ import settingsRouter from "./settings.routes.js";
 import batchesRouter from "./batches.routes.js";
 import publicRouter from "./public.routes.js";
 import shiftsRouter from "./shifts.routes.js";
+import maintenanceRouter from "./maintenance.routes.js";
 const router = Router();
 
 // feature routers here
@@ -14,7 +15,7 @@ router.use("/settings", settingsRouter);
 router.use("/batches", batchesRouter);
 router.use("/public", publicRouter);
 router.use("/worker-shifts", shiftsRouter);
-// router.use("/maintenance", maintenanceRouter);
+router.use("/maintenance", maintenanceRouter);
 // router.use("/metrics", metricsRouter);
 
 export default router;
