@@ -1,4 +1,4 @@
-import { Link, NavLink } from "react-router-dom";
+import { Link, NavLink, useLocation } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
 
 function NavItem({ to, children }) {
@@ -16,6 +16,8 @@ function NavItem({ to, children }) {
 
 export default function Shell({ children }) {
   const { user, logout } = useAuth();
+  const { pathname } = useLocation();
+  const onTrack = pathname === "/track";
   return (
     <div className="min-h-dvh bg-gradient-to-br from-green-50 via-emerald-50 to-amber-50">
       <header className="sticky top-0 z-20 border-b bg-white/80 backdrop-blur">
@@ -25,8 +27,7 @@ export default function Shell({ children }) {
             <span className="font-semibold text-green-900">Zaytena</span>
           </Link>
           <nav className="flex items-center gap-2">
-            {!user && <NavItem to="/track">My Batches</NavItem>}
-            {user && (
+            {user && !onTrack && (
               <>
                 <NavItem to="/clients">Clients</NavItem>
                 <NavItem to="/batches">Batches</NavItem>
@@ -46,7 +47,7 @@ export default function Shell({ children }) {
                 </button>
               </>
             )}
-            {!user && <NavItem to="/login">Login</NavItem>}
+            {!user && !onTrack && <NavItem to="/login">Login</NavItem>}
           </nav>
         </div>
       </header>

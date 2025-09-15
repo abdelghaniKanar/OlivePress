@@ -1,5 +1,9 @@
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
-import AuthProvider, { RequireAuth, RequireRole } from "./context/AuthContext";
+import AuthProvider, {
+  RequireAuth,
+  RequireRole,
+  PublicOnly,
+} from "./context/AuthContext";
 import Shell from "./components/layout/Shell";
 import Login from "./pages/Auth/Login";
 import PublicLookup from "./pages/Public/Lookup";
@@ -18,8 +22,15 @@ export default function App() {
       <BrowserRouter>
         <Shell>
           <Routes>
-            <Route path="/" element={<Navigate to="/track" replace />} />
-            <Route path="/track" element={<PublicLookup />} />
+            <Route path="/" element={<Navigate to="/login" replace />} />
+            <Route
+              path="/track"
+              element={
+                <PublicOnly>
+                  <PublicLookup />
+                </PublicOnly>
+              }
+            />
             <Route path="/login" element={<Login />} />
 
             <Route

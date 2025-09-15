@@ -1,4 +1,5 @@
 import { createContext, useContext, useEffect, useMemo, useState } from "react";
+import { Navigate } from "react-router-dom";
 import api from "../services/api";
 
 const AuthContext = createContext(null);
@@ -40,4 +41,9 @@ export function RequireRole({ role, children }) {
   if (!user) return <div className="p-6">Please log in.</div>;
   if (role && user.role !== role) return <div className="p-6">Forbidden.</div>;
   return children;
+}
+
+export function PublicOnly({ children }) {
+  const { user } = useAuth();
+  return user ? <Navigate to="/clients" replace /> : children;
 }
