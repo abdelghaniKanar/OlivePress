@@ -157,13 +157,23 @@ export default function BatchesList() {
                   <td className="p-2">{b.oilQuantityL}</td>
                   <td className="p-2">{b.totalFee}</td>
                   <td className="p-2">{b.paymentStatus}</td>
-                  <td className="p-2">
+                  <td className="p-2 flex gap-2">
                     <Link
                       className="text-green-700 underline"
                       to={`/batches/${b._id}`}
                     >
                       Open
                     </Link>
+                    <button
+                      onClick={async () => {
+                        if (!confirm("Delete this batch?")) return;
+                        await api.delete(`/batches/${b._id}`);
+                        await load();
+                      }}
+                      className="text-red-700 underline"
+                    >
+                      Delete
+                    </button>
                   </td>
                 </tr>
               ))}

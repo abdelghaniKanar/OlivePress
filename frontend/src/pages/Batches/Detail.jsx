@@ -77,6 +77,19 @@ export default function BatchDetail() {
         </div>
       </div>
 
+      <div className="bg-white rounded-xl shadow p-4">
+        <button
+          onClick={async () => {
+            if (!confirm("Delete this batch?")) return;
+            await api.delete(`/batches/${id}`);
+            window.history.back();
+          }}
+          className="px-3 py-2 rounded bg-red-600 text-white text-sm"
+        >
+          Delete Batch
+        </button>
+      </div>
+
       <div className="bg-white rounded-xl shadow p-4 grid md:grid-cols-3 gap-4">
         <div>
           <div className="font-medium mb-2">Production</div>
