@@ -24,7 +24,7 @@ export default function Shell({ children }) {
         <div className="mx-auto max-w-6xl px-4 py-3 flex items-center justify-between">
           <Link to="/" className="flex items-center gap-2">
             <span className="text-2xl">🫒</span>
-            <span className="font-semibold text-green-900">Zaytena</span>
+            <span className="font-semibold text-green-900">Zeitouna</span>
           </Link>
           <nav className="flex items-center gap-2">
             {user && !onTrack && (
