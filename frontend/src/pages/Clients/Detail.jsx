@@ -1,9 +1,10 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import api from "../../services/api";
 
 export default function ClientDetail() {
   const { id } = useParams();
+  const nav = useNavigate();
   const [client, setClient] = useState(null);
   const [batches, setBatches] = useState([]);
   const [batchForm, setBatchForm] = useState({
@@ -12,10 +13,17 @@ export default function ClientDetail() {
     variety: "",
     notes: "",
   });
+  const [edit, setEdit] = useState({ name: "", phone: "", address: "" });
+  const [savingClient, setSavingClient] = useState(false);
 
   const load = async () => {
     const { data: client } = await api.get(`/clients/${id}`);
     setClient(client);
+    setEdit({
+      name: client.name || "",
+      phone: client.phone || "",
+      address: client.address || "",
+    });
     const { data: list } = await api.get("/batches", {
       params: { cin: client.cin, status: "ALL" },
     });
@@ -47,6 +55,58 @@ export default function ClientDetail() {
         <div className="text-sm text-gray-600">
           {client.cin} · {client.phone} · {client.address}
         </div>
+      </div>
+
+      <div className="bg-white rounded-xl shadow p-4">
+        <h3 className="font-medium mb-3">Edit Client</h3>
+        <form
+          className="grid md:grid-cols-4 gap-3"
+          onSubmit={async (e) => {
+            e.preventDefault();
+            setSavingClient(true);
+            await api.patch(`/clients/${id}`, {
+              name: edit.name,
+              phone: edit.phone,
+              address: edit.address,
+            });
+            await load();
+            setSavingClient(false);
+          }}
+        >
+          <input
+            className="border rounded px-3 py-2"
+            placeholder="Name"
+            value={edit.name}
+            onChange={(e) => setEdit({ ...edit, name: e.target.value })}
+          />
+          <input
+            className="border rounded px-3 py-2"
+            placeholder="Phone"
+            value={edit.phone}
+            onChange={(e) => setEdit({ ...edit, phone: e.target.value })}
+          />
+          <input
+            className="border rounded px-3 py-2"
+            placeholder="Address"
+            value={edit.address}
+            onChange={(e) => setEdit({ ...edit, address: e.target.value })}
+          />
+          <button
+            className={`rounded px-4 py-2 ${savingClient ? "bg-emerald-400 text-white" : "bg-green-700 text-white"}`}
+          >
+            {savingClient ? "Saved" : "Save"}
+          </button>
+        </form>
+        <button
+          onClick={async () => {
+            if (!confirm("Delete this client and all their batches?")) return;
+            await api.delete(`/clients/${id}`);
+            nav("/clients");
+          }}
+          className="mt-3 text-sm px-3 py-2 rounded bg-red-600 text-white"
+        >
+          Delete Client
+        </button>
       </div>
 
       <div className="bg-white rounded-xl shadow p-4">
