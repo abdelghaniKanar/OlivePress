@@ -17,6 +17,10 @@ export default function BatchDetail() {
   const [oil, setOil] = useState("");
   const [status, setStatus] = useState("");
   const [payment, setPayment] = useState("");
+  const [savingProd, setSavingProd] = useState(false);
+  const [savingStatus, setSavingStatus] = useState(false);
+  const [savingPayment, setSavingPayment] = useState(false);
+  const bounceBack = (setter) => setTimeout(() => setter(false), 800);
 
   const load = async () => {
     const { data } = await api.get(`/batches/${id}`);
@@ -30,16 +34,22 @@ export default function BatchDetail() {
   }, [id]);
 
   const saveProduction = async () => {
+    setSavingProd(true);
     await api.patch(`/batches/${id}/production`, { oilQuantityL: Number(oil) });
     await load();
+    bounceBack(setSavingProd);
   };
   const saveStatus = async () => {
+    setSavingStatus(true);
     await api.patch(`/batches/${id}/status`, { status });
     await load();
+    bounceBack(setSavingStatus);
   };
   const savePayment = async () => {
+    setSavingPayment(true);
     await api.patch(`/batches/${id}/payment`, { paymentStatus: payment });
     await load();
+    bounceBack(setSavingPayment);
   };
 
   if (!b) return <div>Loading…</div>;
@@ -79,9 +89,9 @@ export default function BatchDetail() {
             />
             <button
               onClick={saveProduction}
-              className="bg-green-700 text-white rounded px-3"
+              className={`rounded px-3 ${savingProd ? "bg-emerald-400 text-white" : "bg-green-700 text-white"}`}
             >
-              Save
+              {savingProd ? "Saved" : "Save"}
             </button>
           </div>
           <p className="text-xs text-gray-500 mt-2">
@@ -105,9 +115,9 @@ export default function BatchDetail() {
             </select>
             <button
               onClick={saveStatus}
-              className="bg-green-700 text-white rounded px-3"
+              className={`rounded px-3 ${savingStatus ? "bg-emerald-400 text-white" : "bg-green-700 text-white"}`}
             >
-              Update
+              {savingStatus ? "Updated" : "Update"}
             </button>
           </div>
         </div>
@@ -128,9 +138,9 @@ export default function BatchDetail() {
             </select>
             <button
               onClick={savePayment}
-              className="bg-green-700 text-white rounded px-3"
+              className={`rounded px-3 ${savingPayment ? "bg-emerald-400 text-white" : "bg-green-700 text-white"}`}
             >
-              Update
+              {savingPayment ? "Updated" : "Update"}
             </button>
           </div>
         </div>
